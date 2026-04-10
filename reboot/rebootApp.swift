@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct rebootApp: App {
+    @StateObject private var store = RebootStore()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .environmentObject(store)
         }
     }
 }
