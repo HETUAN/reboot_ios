@@ -88,56 +88,76 @@ struct DashboardView: View {
     }
 
     private var hero: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Text(DateHelpers.key(for: .now))
-                .font(.system(size: 11, weight: .bold))
-                .kerning(1)
-                .foregroundStyle(Color(hex: "B9C0FF"))
-
-            Text("Reboot 2026")
-                .font(.system(size: 26, weight: .black, design: .rounded))
-                .foregroundStyle(.white)
-
-            Text("你好，\(store.userName)。")
-                .font(.system(size: 18, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
-
-            Text("每天 5 分钟，完成今天的重启闭环。")
-                .font(.system(size: 13, weight: .medium))
-                .foregroundStyle(Color(hex: "CDD2FF"))
-
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text("今日通关进度")
-                        .font(.system(size: 13, weight: .bold))
+        Button {
+            path.append(.guide)
+        } label: {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(alignment: .top) {
+                    Text(DateHelpers.key(for: .now))
+                        .font(.system(size: 11, weight: .bold))
+                        .kerning(1)
+                        .foregroundStyle(Color(hex: "B9C0FF"))
                     Spacer()
-                    Text("\(Int(todayProgress * 100))%")
-                        .font(.system(size: 14, weight: .black))
-                }
-                .foregroundStyle(.white)
-
-                GeometryReader { proxy in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(Color.white.opacity(0.14))
-                        Capsule().fill(RebootTheme.warning)
-                            .frame(width: proxy.size.width * todayProgress)
+                    HStack(spacing: 6) {
+                        Text("使用引导")
+                            .font(.system(size: 11, weight: .black))
+                        Image(systemName: "arrow.up.right")
+                            .font(.system(size: 10, weight: .black))
                     }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(Color.white.opacity(0.12))
+                    .clipShape(Capsule())
                 }
-                .frame(height: 8)
 
-                Text("早晨完成 + 2 次白天检查 + 晚间复盘 = 今日闭环")
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundStyle(Color(hex: "C6CCFF"))
+                Text("Reboot 2026")
+                    .font(.system(size: 26, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+
+                Text("你好，\(store.userName)。")
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+
+                Text("每天 5 分钟，完成今天的重启闭环。点击这里查看方法论和使用说明。")
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundStyle(Color(hex: "CDD2FF"))
+
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("今日通关进度")
+                            .font(.system(size: 13, weight: .bold))
+                        Spacer()
+                        Text("\(Int(todayProgress * 100))%")
+                            .font(.system(size: 14, weight: .black))
+                    }
+                    .foregroundStyle(.white)
+
+                    GeometryReader { proxy in
+                        ZStack(alignment: .leading) {
+                            Capsule().fill(Color.white.opacity(0.14))
+                            Capsule().fill(RebootTheme.warning)
+                                .frame(width: proxy.size.width * todayProgress)
+                        }
+                    }
+                    .frame(height: 8)
+
+                    Text("早晨完成 + 2 次白天检查 + 晚间复盘 = 今日闭环")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(Color(hex: "C6CCFF"))
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 12)
+                .background(Color.white.opacity(0.08))
+                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
             }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 12)
-            .background(Color.white.opacity(0.08))
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .padding(18)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(RebootTheme.night)
+            .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+            .rebootTapTarget(cornerRadius: 28)
         }
-        .padding(18)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(RebootTheme.night)
-        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .buttonStyle(.plain)
     }
 
     private func taskCard(title: String, icon: String, accent: Color, background: Color, status: String, meta: String, route: AppRoute) -> some View {

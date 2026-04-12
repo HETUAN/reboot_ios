@@ -1,6 +1,7 @@
 import Foundation
 
 enum AppRoute: Hashable {
+    case guide
     case morning
     case daytime
     case evening

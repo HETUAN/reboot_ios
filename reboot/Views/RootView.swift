@@ -14,6 +14,8 @@ struct RootView: View {
                     DashboardView(path: $path)
                         .navigationDestination(for: AppRoute.self) { route in
                             switch route {
+                            case .guide:
+                                GuideView()
                             case .morning:
                                 MorningRitualView()
                             case .daytime:
